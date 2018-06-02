@@ -1,0 +1,37 @@
+# Swap files
+*.swp
+
+# Remove compiler specific
+*.json
+
+# LaTeX temporary files
+*.aux
+*.log
+*.toc
+
+# Other temp files
+*.app
+*.fls
+*.loa
+*.lof
+*.lot
+
+# PDF output - usually a bad idea to keep this in Git
+*.pdf
+
+# Latexmk
+*.fdb_latexmk
+
+# SyncTeX
+*.synctex.gz
+
+# LaTeX Beamer
+*.snm
+*.vrb
+*.nav
+*.out
+
+# BibTeX
+*.bbl
+*.blg
+

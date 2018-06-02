@@ -1,0 +1,536 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University of Western Ontario Thesis Template
+% 1. Initial version by: Justin Quinn Veenstra, 2010 with thanks to Mr. (soon to be Dr.) Will Robertson.
+% 2. Adapted by: Dr. John Stuart Haberl Baxter, 2018 for his thesis.
+% 3. Dr. Baxter's thesis converted to generic template by: Dr. Jonathan C. Lau, 2018.
+
+
+\documentclass[hidelinks,12pt,oneside]{report}
+%% Decomment next line to use PostScript fonts
+%%\UsePackage{times}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                    %%
+%%                    ***   I M P O R T A N T   ***                   %%
+%%                                                                    %%
+%% Fill in the following fields with the required information:        %%
+%%  - \department{...}  name of the graduate department               %%
+%%  - \degree{...}      name of the degree obtained                   %%
+%%  - \author{...}      name of the author                            %%
+%%  - \title{...}       title of the thesis                           %%
+%%  - \gyear{...}       year of graduation                            %%
+%%  - \super{...}    supervisor
+%%  - \firstname, \middlename, \lastname... there is additional documentation by the actual fields, so I'll leave it at that
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{appendix}
+\usepackage{graphicx}
+\usepackage[fleqn]{amsmath}
+\usepackage[byname]{smartref}
+\usepackage[]{amssymb}
+\usepackage[font=small]{caption}
+\usepackage[font=small]{subcaption}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\newlength\longest
+%\usepackage{lineno}%comment out for hardcopy
+\usepackage{units}
+\usepackage{txfonts}
+\usepackage{tocloft}
+\usepackage{tabularx}
+\usepackage{longtable}
+%\usepackage[sectionbib]{chapterbib}
+
+\usepackage{hyperref} %comment out for hardcopy
+\usepackage{txfonts}
+\usepackage{tocloft}
+\usepackage{color}
+\usepackage{pdfpages}
+
+
+\makeatletter
+\numberwithin{figure}{chapter}
+\newenvironment{acknowledgements}%
+{\clearemptydoublepage
+ \begin{center}
+  \section*{Acknowledgements}
+ \end{center}
+ \begingroup
+}{\newpage\endgroup}
+
+
+\usepackage[boxruled,algochapter]{algorithm2e}
+
+\DeclareMathOperator*{\argmin}{\operatorname{argmin}}
+\DeclareMathOperator*{\Proj}{\operatorname{Proj}}
+\DeclareMathOperator*{\dvg}{\operatorname{div}}
+
+\newenvironment{dedication}%
+{\clearemptydoublepage 
+ \begin{center}
+  \section*{Dedication}
+ \end{center}
+ \begingroup
+}{\newpage\endgroup}
+
+\newenvironment{preliminary}%
+{\pagestyle{plain}\pagenumbering{roman}}%
+{\pagenumbering{arabic}}
+
+\addtoreflist{chapter}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{axiom}{Axiom}
+
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\newcommand{\qed}{\nobreak \ifvmode \relax \else
+      \ifdim\lastskip<1.5em \hskip-\lastskip
+      \hskip1.5em plus0em minus0.5em \fi \nobreak
+      \vrule height0.75em width0.5em depth0.25em\fi}
+
+% Default values for title page.
+
+%% To produce output with the desired line spacing, the argument of
+%% \spacing should be multiplied by 5/6 = 0.8333, so that 1 1/2 spaced
+%% corresponds to \spacing{1.5} and double spaced is \spacing{1.66}.
+\def\normalspacing{1.66} % default line spacing
+
+
+%% Define the "thesis" page style.
+\if@twoside % If two-sided printing.
+\def\ps@thesis{\let\@mkboth\markboth
+   \def\@oddfoot{}
+   \let\@evenfoot\@oddfoot
+   \def\@oddhead{
+      {\sc\rightmark} \hfil \rm\thepage
+      }
+   \def\@evenhead{
+      \rm\thepage \hfil {\sc\leftmark}
+      }
+   \def\chaptermark##1{\markboth{\ifnum \c@secnumdepth >\m@ne
+      Chapter \ \thechapter. \ \fi ##1}{}}
+   \def\sectionmark##1{\markright{\ifnum \c@secnumdepth >\z@
+      \thesection. \ \fi ##1}}}
+\else % If one-sided printing.
+\def\ps@thesis{\let\@mkboth\markboth
+   \def\@oddfoot{}
+   \def\@oddhead{
+      {\sc\rightmark} \hfil \rm\thepage
+      }
+   \def\chaptermark##1{\markright{\ifnum \c@secnumdepth >\m@ne
+      Chapter\ \thechapter. \ \fi ##1}}}
+\fi
+
+\if@twoside % If two-sided printing.
+\def\ps@appendix{\let\@mkboth\markboth
+   \def\@oddfoot{}
+   \let\@evenfoot\@oddfoot
+   \def\@oddhead{
+      {\sc\rightmark} \hfil \rm\thepage
+      }
+   \def\@evenhead{
+      \rm\thepage \hfil {\sc\leftmark}
+      }
+   \def\chaptermark##1{\markboth{\ifnum \c@secnumdepth >\m@ne
+      Appendix \ \thechapter. \ \fi ##1}{}}
+   \def\sectionmark##1{\markright{\ifnum \c@secnumdepth >\z@
+      \thesection. \ \fi ##1}}}
+\else % If one-sided printing.
+\def\ps@thesis{\let\@mkboth\markboth
+   \def\@oddfoot{}
+   \def\@oddhead{
+      {\sc\rightmark} \hfil \rm\thepage
+      }
+   \def\chaptermark##1{\markright{\ifnum \c@secnumdepth >\m@ne
+      Chapter\ \thechapter. \ \fi ##1}}}
+\fi
+
+\pagestyle{thesis}
+% Set up page layout.
+\setlength{\textheight}{9in} % Height of the main body of the text
+\setlength{\topmargin}{-.5in} % .5" margin on top of page
+\setlength{\headsep}{.5in}  % space between header and top of body
+\addtolength{\headsep}{-\headheight} % See The LaTeX Companion, p 85
+\setlength{\footskip}{.5in}  % space between footer and bottom of body
+\setlength{\textwidth}{6.25in} % width of the body of the text
+\setlength{\oddsidemargin}{.25in} % 1.25" margin on the left for odd pages
+\setlength{\evensidemargin}{0in} % 1.25"  margin on the right for even pages
+
+% Marginal notes
+\setlength{\marginparwidth}{.75in} % width of marginal notes
+\setlength{\marginparsep}{.125in} % space between marginal notes and text
+
+% Make each page fill up the entire page. comment this out if you
+% prefer. 
+\flushbottom
+
+\setcounter{tocdepth}{3} % Number the subsubsections 
+\def\normalspacing{1.66} % default line spacing
+
+\newcommand\isco[1]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{}%
+  \ifx\@tempa\@tempb
+	\else \\\underline{Co-Supervisor:}\vspace{0.35in}\\\dots\dots\dots\dots\dots\dots\dots\\{#1}\\
+  \fi
+}
+
+\newcommand\isjoint[1]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{}%
+  \ifx\@tempa\@tempb
+	\else \\\underline{Joint Supervisor:}\vspace{0.35in}\\\dots\dots\dots\dots\dots\dots\dots\\{#1}\\
+  \fi
+}
+
+\newcommand\isalt[1]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{}%
+  \ifx\@tempa\@tempb
+	\else \\\underline{Alternate Supervisor:}\vspace{0.35in}\\\dots\dots\dots\dots\dots\dots\dots\\{#1}\\
+  \fi
+}
+
+\newcommand\isdefinedsig[1]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{}%
+  \ifx\@tempa\@tempb
+	\else \\ \dots\dots\dots\dots\dots\dots\dots\\{#1}\\
+  \fi
+}
+\newcommand\isdefinedspinetitle[1]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{}%
+  \ifx\@tempa\@tempb
+	\else (Spine title: #1)\\
+  \fi
+}
+\newcommand\coauthor[1]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{}%
+  \ifx\@tempa\@tempb
+	\else \newpage \Large Co-Authorship Statement\normalsize\\\indent\\#1\\
+  \fi
+}
+
+\newcommand\acknowlege[1]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{}%
+  \ifx\@tempa\@tempb
+	\else \newpage \Large Acknowledgements\normalsize\\\indent\\#1\newpage
+  \fi
+}
+
+%\renewcommand{\appendixtocname}{\Huge \textbf{List of Appendices} \normalsize}
+\newcommand{\blank}{\hspace{-2mm}}
+\newcommand{\super}{Dr. Supervisor1} %supervisor
+\newcommand{\superj}{Dr. Supervisor2} %joint supervisor, if there is one, leave blank if not (lbin)... only one of the three.
+\newcommand{\superc}{} %co-supervisor, if there is one, leave blank if not (lbin)
+\newcommand{\supera}{} %alternate supervisor, if there is one, leave blank if not (lbin)
+\newcommand{\scoa}{Dr. Committee1}  %member of supervisory committee
+\newcommand{\scob}{Dr. Committee2}  %member of supervisory committee
+\newcommand{\scoc}{Dr. Committee3}  %member of supervisory committee
+\newcommand{\sct}{}  %other member of supervisory committee (lbin)
+\newcommand{\examo}{Dr. Examiner1}  %examining committee (up to four, if less leave blank)
+\newcommand{\examt}{Dr. Examiner2}
+\newcommand{\examth}{Dr. Examiner3}
+\newcommand{\examf}{Dr. Examiner4}
+\newcommand{\department}{Department of []}
+\newcommand{\degree}{Doctor of Philosophy}
+\newcommand{\firstname}{Firstname}
+\newcommand{\middlename}{Middleinitial}
+\newcommand{\lastname}{Lastname}
+%\renewcommand{\author}[1]{\ifx\empty#1\else\gdef\@author{#1}\fi} 
+\newcommand{\authorname}{{\firstname} {\middlename} {\lastname}}
+\newcommand{\titl}{Thesis Title}
+\newcommand{\spinetitle}{}%only if the above is more than 60 characters
+\newcommand{\thesisformat}{Integrated Article} %or Monograph
+\newcommand{\gyear}{\number\year}
+\newcommand{\makecoauthor}{}
+\newcommand{\makeacknowlege} {
+%Type in acknowlegements here
+}
+\newcommand{\listappendixname}{List of Appendices}
+\newlistof{myappendices}{app}{\listappendixname}
+\newcommand{\myappendices}[1]{%
+\addcontentsline{app}{myappendices}{#1}\par}
+
+\renewcommand{\maketitle}
+{\begin{titlepage}
+   \setcounter{page}{1}
+   %% Set the line spacing to 1 for the title page.
+   %\begin{spacing}{1} 
+   \begin{large}
+   \begin{center}
+      \mbox{}
+      \vfill
+      {\MakeUppercase{\titl}}\\
+      \isdefinedspinetitle{\spinetitle}
+      (Thesis format: \thesisformat)\\
+      \vfill
+      by \\
+      \vfill
+      {\firstname{} \middlename } \underline{\lastname}\\
+      \vfill
+      Graduate Program in {\department}\\
+      \vfill
+		A thesis submitted in partial fulfillment\\
+		of the requirements for the degree of\\
+		\degree\\
+		\vfill
+		The School of Graduate and Postdoctoral Studies\\
+		The University of Western Ontario\\
+		London, Ontario, Canada\\
+		\vfill
+      {\copyright} {\authorname} {\gyear}  \\
+      \vspace*{.2in}
+   \end{center}
+   \end{large}
+%   \end{spacing}
+   \end{titlepage}
+
+}%\maketitle
+
+\newcommand{\makecert}{
+   \setcounter{page}{2}
+\vfill
+\begin{center}
+\large
+THE UNIVERSITY OF WESTERN ONTARIO\\
+School of Graduate and Postdoctoral Studies\\
+\vfill
+\textbf{CERTIFICATE OF EXAMINATION}
+\end{center}
+
+\vfill
+\begin{table}[ht]
+\begin{minipage}[t]{0.5\linewidth} %tabular instead?
+\begin{tabular}{l}
+\underline{Supervisor:}\vspace{0.35in}
+\isdefinedsig{\super}
+\isco{\superc}
+\isjoint{\superj}
+\isalt{\supera}
+\\
+%\underline{Supervisory Committee:}\vspace{0.35in}
+%\isdefinedsig{\scoa}\vspace{0.15in}
+%\isdefinedsig{\scob}\vspace{0.15in}
+%\isdefinedsig{\scoc}\vspace{0.15in}
+%\isdefinedsig{\sct}
+\end{tabular}
+\vfill
+\end{minipage}
+\hspace{0.5in}
+\begin{minipage}[t]{0.5\linewidth}
+\begin{tabular}{l}
+\underline{Examiners:} \\\vspace{.5cm}
+\isdefinedsig{\examo}\\
+\isdefinedsig{\examt}\\
+\isdefinedsig{\examth}\\
+\isdefinedsig{\examf}
+\end{tabular}
+\vfill
+\end{minipage}
+\vfill
+\end{table}
+\vfill
+\begin{center}
+The thesis by \\ \vfill
+\textbf{\firstname{} \middlename{} \underline{\lastname}}\\
+\vfill
+entitled:\\\vfill
+\textbf{\titl}\\\vfill
+is accepted in partial fulfillment of the \\
+requirements for the degree of\\
+\degree\\
+\end{center}
+\begin{table}[ht]
+\begin{minipage}[t]{0.5\linewidth}
+\begin{tabular}{l}
+\dots\dots\dots\dots\dots\\
+Date
+\end{tabular}
+\end{minipage}
+\hspace{0.5in}
+\begin{minipage}[t]{0.5\linewidth}
+\begin{tabular}{l}
+\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\\
+Chair of the Thesis Examination Board
+\end{tabular}
+\end{minipage}
+\end{table}
+
+}
+
+\makeatother
+\begin{document}
+
+
+%% ***   NOTE   ***
+%% You should put all of your '\newcommand', '\newenvironment', and
+%% '\newtheorem's (in other words, all the global definitions that you
+%% will need throughout your thesis) in a separate file and use
+%% "\input{filename}" to input it here.
+
+
+%% This sets the page style and numbering for preliminary sections.
+\begin{preliminary}
+
+%% This generates the title page from the information given above.
+\maketitle
+%\addcontentsline{toc}{chapter}{Certificate of Examination}
+%\makecert
+\newpage
+
+
+%\addcontentsline{toc}{chapter}{Co-Authorship Statement}
+%\coauthor{\makecoauthor}  %comment this out if none
+%\newpage
+%\addcontentsline{toc}{chapter}{Acknowlegements}
+%\acknowlege{\makeacknowlege}	%as above
+\setcounter{page}{2}
+\addcontentsline{toc}{chapter}{Abstract}
+\Large\begin{center}\textbf{Abstract}\end{center}\normalsize
+%%  ***  Put your Abstract here.   ***
+%% (150 words for M.Sc. and 350 words for Ph.D.)
+\input{abstract}
+
+\vfill
+\noindent\textbf{Keywords:} keyword 1, keyword 2, keyword 3.
+\newpage
+
+
+
+
+\clearpage
+
+\thispagestyle{empty}
+\null\vfill
+{
+	\settowidth\longest{\Large\itshape Planning to write is not writing. Outlining, researching,}
+	\centering
+	\hspace{3cm}\parbox{\longest}{%
+		\raggedright{\Large\itshape%
+      Planning to write is not writing. Outlining, researching, talking to people about what you’re doing, none of that is writing. Writing is writing.\par\bigskip
+		}   
+		\raggedleft\MakeUppercase{E. L. Doctorow}\par%
+		\raggedleft\MakeUppercase{\textit{Some book}}\par%
+}}
+
+\vfill\vfill
+
+\newpage
+
+
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\Large\begin{center}\textbf{Acknowledgments}\end{center}\normalsize
+\input{acknowledgements}
+\vfill
+\newpage
+\singlespacing
+
+%%  ***  Put your Abstract here.   ***
+%% (150 words for M.Sc. and 350 words for Ph.D.)
+\tableofcontents\newpage
+\newpage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\newpage
+\addcontentsline{toc}{chapter}{List of Algorithms}
+\listofalgorithms
+\addtocontents{loa}{\def\string\figurename{Algorithm}}
+\newpage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\newpage
+\addcontentsline{toc}{chapter}{List of Appendices}
+\listofmyappendices\newpage
+
+\addcontentsline{toc}{chapter}{List of Abbreviations, Symbols, and Nomenclature}
+\Large \textbf{List of Abbreviations, Symbols, and Nomenclature} \normalsize
+
+\begin{tabular}{lcl}
+\\
+\multicolumn{3}{l}{\textbf{Terminology}}\\
+CNR & & Contrast-to-noise ratio \\
+SNR & \, & Signal-to-noise ratio \\
+\\
+\multicolumn{3}{l}{\textbf{Medical Imaging Terminology}}\\
+CT & \, & Computed Tomography \\
+MRI & \, & Magnetic Resonance Imaging \\
+QSM & \, & Quantitative Susceptibility Mapping \\
+\\
+\multicolumn{3}{l}{\textbf{Terms Introduced by this Thesis}}\\
+$\mathbb{ABC}$ && ABC \\
+DEF & \, & DEF \\
+\end{tabular}
+
+\newpage
+	
+\clearpage
+
+\addcontentsline{toc}{chapter}{Preface}
+\Large\begin{center}\textbf{Preface}\end{center}\normalsize
+\onehalfspacing
+\input{preface}
+
+\newpage
+
+\end{preliminary}
+%% End of the preliminary sections: reset page style and numbering.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                    %%
+%%                    ***   I M P O R T A N T   ***                   %%
+%%                                                                    %%
+%% Put your Chapters here; the easiest way to do this is to keep each %%
+%% chapter in a separate file and \include all the files right here.  %%
+%% Note that each chapter file should start with the line             %%
+%% "\chapter{ChapterName}".  Note that using "\include" instead of    %%
+%% "\input" makes each chapter start on a new page.                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\onehalfspacing
+\input{chapter_intro}
+\input{chapter_example}
+\input{chapter_conc}
+
+%Appendices.
+\begin{appendices}
+%\pagestyle{appendix}
+\input{app_example}
+\input{app_ethics}
+\input{app_copyright}
+%\input{app_solver}
+%\input{app_hierarchy}
+%\input{app_smooth}
+\end{appendices}
+\newpage
+\singlespacing
+
+%% This adds a line for the Bibliography in the Table of Contents.
+\addcontentsline{toc}{chapter}{Bibliography}
+%% ***   Set the bibliography style.   ***
+\bibliographystyle{plain} % (change according to your preference)
+%%% ***   Set the bibliography file.   ***
+\bibliography{westernthesis}{}
+%% ***   NOTE   ***
+%% If you don't use bibliography files, comment out the previous line
+%% and use \begin{thebibliography}...\end{thebibliography}.  (In that
+%% case, you should probably put the bibliography in a separate file
+%% and \include or \input it here).
+
+
+%CV only relevant stuff... not full CV.
+\include{curriculum_vitae}
+
+\end{document}

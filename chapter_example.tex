@@ -1,0 +1,38 @@
+\chapter{Chapter Title}\label{chap:example}
+
+This chapter is largely based on:
+\begin{itemize}[noitemsep,topsep=0pt]
+	\item This paper.
+\end{itemize}
+with additional material from:
+\begin{itemize}[noitemsep,topsep=0pt]
+	\item this other paper.
+\end{itemize}
+
+\section{Introduction}
+Introduction to this chapter.
+
+\section{Main section}
+
+Text here.
+
+\section{Main section 2}
+\subsection{Subsection}
+
+Text here and a reference \cite{Author2018}. Also another reference cited in Chapter \ref{chap:intro} \cite{Author1990}.
+
+\subsection{Some equation}
+
+Text here with an equation.
+
+\begin{equation}
+\begin{aligned}
+\underset{p_S,p_T,q,\lambda} \min & \int_\Omega p_S(x)dx \\
+\text{s.t. } & |q'(x)| \leq R(x) , \\
+\text{ } & \lambda(x) \geq 0, \\
+\text{ } & p_S(x) \leq D_S(x), \, p_T(x) \leq D_T(x), \\
+\text{ } & \operatorname{div}\left( q'(x) + \lambda(x)e(x) \right) - p_S(x) + p_T(x) = 0
+\label{eq:jingOpt}
+\end{aligned}
+\end{equation}
+where $D_S(x)$ and $D_T(x)$.
